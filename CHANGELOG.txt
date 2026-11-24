@@ -1,0 +1,264 @@
+
+ ╔══════════════════════════════════════════════════════════════════════════════════╗
+ ║                                                                                ║
+ ║    ██████╗██╗  ██╗ █████╗ ███╗   ██╗ ██████╗ ███████╗██╗      ██████╗  ██████╗ ║
+ ║   ██╔════╝██║  ██║██╔══██╗████╗  ██║██╔════╝ ██╔════╝██║     ██╔═══██╗██╔════╝ ║
+ ║   ██║     ███████║███████║██╔██╗ ██║██║  ███╗█████╗  ██║     ██║   ██║██║  ███╗ ║
+ ║   ██║     ██╔══██║██╔══██║██║╚██╗██║██║   ██║██╔══╝  ██║     ██║   ██║██║   ██║ ║
+ ║   ╚██████╗██║  ██║██║  ██║██║ ╚████║╚██████╔╝███████╗███████╗╚██████╔╝╚██████╔╝ ║
+ ║    ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ║
+ ║                                                                                ║
+ ║              INTELLIGENT PRODUCT RECOMMENDATION SYSTEM                         ║
+ ║                       Version History & Changes                                ║
+ ║                                                                                ║
+ ╚══════════════════════════════════════════════════════════════════════════════════╝
+
+
+ ┌──────────────────────────────────────────────────────────────────────────────────┐
+ │  📌 Format: Each version lists WHAT changed, WHERE it changed, and WHY.        │
+ │  🔖 Backup files for V1 are: old_main.py, old_App.jsx, old_SearchBar.jsx       │
+ └──────────────────────────────────────────────────────────────────────────────────┘
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██╗   ██╗ ██╗       ██████╗
+  ██║   ██║███║      ██╔═████╗
+  ██║   ██║╚██║      ██║██╔██║
+  ╚██╗ ██╔╝ ██║      ████╔╝██║
+   ╚████╔╝  ██║  ██╗ ╚██████╔╝
+    ╚═══╝   ╚═╝  ╚═╝  ╚═════╝
+  INITIAL MOCK VERSION (February 2026)
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  This is the very first version. Foundation for the entire project.
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] backend/main.py                                                    │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Created FastAPI app with CORS middleware                               │
+  │  • GET /api/recommendations → returns mock product data                   │
+  │  • GET / → welcome message                                               │
+  │  • Data source: mock_data.json (3 hardcoded gaming laptops)               │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] backend/mock_data.json                                             │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • 3 sample products: ASUS ROG, Acer Nitro, Lenovo Legion                │
+  │  • Fields: title, image, price, originalRating, aiSentimentScore,         │
+  │    features (with per-feature sentiment: +1, 0, -1)                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] frontend/src/App.jsx                                               │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Main React component with header, hero section, results grid           │
+  │  • Contains MOCK_PRODUCTS array as fallback data                          │
+  │  • handleSearch() fetches from /api/recommendations                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] frontend/src/components/SearchBar.jsx                              │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Simple text input + "Analyze Reviews" submit button                    │
+  │  • Calls onSearch(query) on form submission                               │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] frontend/src/components/ProductCard.jsx                            │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Displays product image, title, price, star rating, AI sentiment        │
+  │  • Shows feature badges with sentiment coloring                           │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██╗   ██╗ ██╗      ███████╗
+  ██║   ██║███║      ██╔════╝
+  ██║   ██║╚██║      ███████╗
+  ╚██╗ ██╔╝ ██║      ╚════██║
+   ╚████╔╝  ██║  ██╗ ███████║
+    ╚═══╝   ╚═╝  ╚═╝ ╚══════╝
+  NLP PIPELINE + SEMANTIC SEARCH (March 2026)
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  Major upgrade: Real NLP data processing, semantic search, and sorting.
+  ⚠️  BACKUP OF THIS VERSION: old_main.py, old_App.jsx, old_SearchBar.jsx
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] backend/colab_pipeline.py / colab_pipeline.ipynb                   │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Google Colab script for GPU-accelerated NLP processing                 │
+  │  • Loads Kaggle CSVs: 20191226-items.csv + 20191226-reviews.csv           │
+  │  • Merges on 'asin' column after whitespace stripping                     │
+  │  • Initially used BERT → UPGRADED to RoBERTa model                       │
+  │    (LiYuan/amazon-review-sentiment-analysis) for 95.14% accuracy          │
+  │  • Calculates hybrid score: sentiment + star_rating + feature_score       │
+  │  • Exports: processed_products.json                                       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [MODIFIED] backend/main.py                                               │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  WHAT CHANGED:                                                            │
+  │  • Added scikit-learn TF-IDF semantic search (replaces keyword matching)  │
+  │  • Loads processed_products.json (falls back to mock_data.json)           │
+  │  • In-memory caching: data loaded ONCE on startup via @app.on_event       │
+  │  • NEW sorting parameters on /api/recommendations:                        │
+  │    ├── sort=rank_desc  (Highly Recommended, DEFAULT)                      │
+  │    ├── sort=rank_asc   (Lowest Recommended)                               │
+  │    ├── sort=price_low  (Price: Low to High)                               │
+  │    └── sort=price_high (Price: High to Low)                               │
+  │  • Cosine similarity search with 0.01 threshold                           │
+  │  • Fallback exact-word matching for edge cases                            │
+  │                                                                           │
+  │  WHY:                                                                     │
+  │  • TF-IDF gives much more relevant search results than string.contains()  │
+  │  • In-memory caching prevents slow disk reads on every user request       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [MODIFIED] frontend/src/App.jsx                                          │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  WHAT CHANGED:                                                            │
+  │  • Added currentQuery state to track the active search term               │
+  │  • Added sortMethod state (default: "rank_desc")                          │
+  │  • handleSearch() now accepts (query, sort) and passes both to backend    │
+  │  • Fetch URL: /api/recommendations?q=<query>&sort=<method>                │
+  │  • Passes currentSort and onSortChange as props to SearchBar              │
+  │                                                                           │
+  │  WHY:                                                                     │
+  │  • Enables sorting to be triggered independently from searching           │
+  │  • Re-sorting results doesn't require the user to retype their query      │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [MODIFIED] frontend/src/components/SearchBar.jsx                         │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  WHAT CHANGED:                                                            │
+  │  • Now receives props: { onSearch, currentSort, onSortChange }            │
+  │  • Added <select> dropdown with 4 sort options                            │
+  │  • Wrapped in <div className="search-controls-wrapper">                   │
+  │  • Button text changed: "Analyze Reviews" → "Search"                      │
+  │  • Placeholder updated to: "Search for products (e.g., 'samsung')"        │
+  │                                                                           │
+  │  WHY:                                                                     │
+  │  • Users can now visually choose how to sort search results               │
+  │  • Dropdown triggers an immediate re-fetch with the new sort method       │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [MODIFIED] frontend/src/components/ProductCard.jsx                       │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  WHAT CHANGED:                                                            │
+  │  • Mapped new JSON fields: rating, calculated_sentiment_score,            │
+  │    initial_rank, review_count                                             │
+  │  • Added safe fallbacks with || for all numeric fields                    │
+  │  • Number() cast before .toFixed() to prevent "undefined.toFixed" crash   │
+  │  • Added <img onError={...}> to show placeholder on broken Amazon URLs    │
+  │  • Features section only renders if features array exists                 │
+  │                                                                           │
+  │  WHY:                                                                     │
+  │  • processed_products.json has different field names than mock_data.json   │
+  │  • Amazon image URLs from 2019 datasets are often expired/broken          │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] frontend/src/components/SearchBar.css (Appended)                   │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • .search-controls-wrapper: flex container centering the search row      │
+  │  • .sort-dropdown: styled select element with border-radius and padding   │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██╗   ██╗██████╗      ██████╗
+  ██║   ██║╚════██╗    ██╔═████╗
+  ██║   ██║ █████╔╝    ██║██╔██║
+  ╚██╗ ██╔╝██╔═══╝     ████╔╝██║
+   ╚████╔╝ ███████╗ ██╗╚██████╔╝
+    ╚═══╝  ╚══════╝ ╚═╝ ╚═════╝
+  MULTI-CATEGORY INTEGRATION (In Progress - March 2026)
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  Expanding from a single small Kaggle dataset to multiple diverse categories
+  using the McAuley Lab Amazon Reviews 2023 dataset via Parquet file downloads.
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [NEW] backend/colab_pipeline_v5.ipynb                                    │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Reads manually downloaded .parquet files (not Hugging Face API)        │
+  │  • Uses glob to auto-discover all uploaded parquet files                   │
+  │  • Uses pd.concat to merge 10+ parquet chunks into one DataFrame          │
+  │  • Same RoBERTa NLP + Hybrid Score pipeline as V1                         │
+  │  • CATEGORY_NAME variable: change per run ("Electronics", "Fashion", etc) │
+  │  • Output: <category>_processed.json                                      │
+  │                                                                           │
+  │  WHY:                                                                     │
+  │  • HuggingFace datasets library broke (trust_remote_code deprecated)      │
+  │  • UCSD datarepo raw servers returned 404 errors                          │
+  │  • Manual parquet download is the only reliable method right now           │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [UPCOMING] backend/main.py                                               │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Will load multiple category-specific JSON files                        │
+  │  • New query parameter: category= to filter by product category           │
+  │  • Separate TF-IDF indexes per category for fast search                   │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [UPCOMING] frontend/src/components/SearchBar.jsx                         │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Will add a Category dropdown (Electronics, Fashion, Appliances)        │
+  │  • Selected category passed as query param to backend                     │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+  ┌─────────────────────────────────────────────────────────────────────────────┐
+  │  [UPCOMING] frontend/src/App.jsx                                          │
+  │  ──────────────────────────────────────────────────────────────────────    │
+  │  • Will add category state and pass it to fetch URL                       │
+  │  • Will pass category props to SearchBar component                        │
+  └─────────────────────────────────────────────────────────────────────────────┘
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  ┌──────────────────────────────────────────────────────────────────────────────┐
+  │                                                                            │
+  │   📂 COMPLETE FILE MAP                                                    │
+  │   ─────────────────────────────────────────────────────────────────────     │
+  │                                                                            │
+  │   Product_Recommendation_System/                                          │
+  │   ├── PROJECT_PROGRESS.txt         ← This file (step-by-step guide)       │
+  │   ├── CHANGELOG.txt                ← Version history with diffs           │
+  │   │                                                                        │
+  │   ├── backend/                                                            │
+  │   │   ├── main.py                  ← Current working backend (V1.5)       │
+  │   │   ├── old_main.py              ← 🔒 BACKUP of V1.5 main.py           │
+  │   │   ├── mock_data.json           ← Original mock data (3 laptops)       │
+  │   │   ├── processed_products.json  ← NLP output from small Kaggle data   │
+  │   │   ├── colab_pipeline.py        ← Original Colab script (Kaggle CSV)  │
+  │   │   ├── colab_pipeline.ipynb     ← Jupyter version of above             │
+  │   │   └── colab_pipeline_v5.ipynb  ← NEW: Multi-category Parquet script  │
+  │   │                                                                        │
+  │   └── frontend/src/                                                       │
+  │       ├── App.jsx                  ← Current working App (V1.5)           │
+  │       ├── old_App.jsx              ← 🔒 BACKUP of V1.5 App.jsx           │
+  │       ├── App.css                  ← Main stylesheet                      │
+  │       │                                                                    │
+  │       └── components/                                                     │
+  │           ├── SearchBar.jsx        ← Current SearchBar (V1.5)             │
+  │           ├── old_SearchBar.jsx    ← 🔒 BACKUP of V1.5 SearchBar.jsx     │
+  │           ├── SearchBar.css        ← SearchBar + sort dropdown styles     │
+  │           ├── ProductCard.jsx      ← Product display component            │
+  │           ├── ProductCard.css      ← Product card styles                  │
+  │           ├── RecommendationList.jsx  ← Grid layout for cards             │
+  │           └── RecommendationList.css  ← Grid styles                       │
+  │                                                                            │
+  └──────────────────────────────────────────────────────────────────────────────┘
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+                        Last Updated: March 10, 2026
+ ═══════════════════════════════════════════════════════════════════════════════════

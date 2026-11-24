@@ -1,0 +1,44 @@
+Project Code and Workflow Explanations
+
+1. Main.py file
+Built using the FastAPI framework, `main.py` is the central backend server for the recommendation system. 
+On startup, it reads the comprehensive dataset (`final_master_dataset.jsonl`) into a Pandas DataFrame and extracts unique brands and category sets into memory. 
+It provides multiple REST API endpoints for the frontend, including:
+- `/api/search`: Handles natural language search queries by intelligently extracting brands, categories, and keywords, scoring and ranking results against the full dataset, and returning the top 20 matches.
+- `/api/browse`: Allows simple browsing by an exact category, returning top products sorted by their `initial_rank`.
+- `/api/categories` and `/api/brands`: Returns lists of available categories and brands dynamically to populate frontend dropdowns.
+
+2. How Backend and Frontend connected
+The backend is a FastAPI server exposing HTTP REST endpoints (running on localhost:8000), configured with a CORS middleware allowing cross-origin requests. The frontend is a React Single Page Application (SPA). To fetch data, the frontend (`App.jsx`) uses the built-in browser `fetch()` API to make GET requests to the backend URLs (e.g., `fetch("http://localhost:8000/api/categories")` or `fetch(...)` to the search/browse endpoints). 
+The frontend receives JSON responses, parses the `data` arrays, and stores them in React state variables (`setProducts`, `setCategoriesList`), which automatically trigger UI re-renders to display the data.
+
+3. After sending search bar input what is the process in backend
+When a user submits a search, the following sequence occurs:
+1. The frontend fires a GET request to `/api/search?q=<query>`.
+2. The `search_products` endpoint in `main.py` forwards the query to the `query_processor.py` engine.
+3. Preprocessing: `preprocess_query` converts the string to lowercase, strips punctuation, tokenizes the words, and removes basic English stopwords.
+4. Entity Extraction: `detect_entities` iterates over the tokens, searching against known dataset categories, brands, or common aliases (like "smartphone" -> "Cell Phones"). Unmatched terms become general keywords.
+5. Scoring & Ranking: `score_and_rank_products` filters products containing any of the entities. It assigns baseline score bonuses (+100 for exact brand match, +80 for exact category match, +40 per title keyword match). It takes that match score, adds the pre-calculated `initial_rank` (acting as a tiebreaker and general product quality metric), and sorts descending by final score, rating, and review count.
+6. The top 20 product results are serialized into JSON including visual interpretations of the query ("identified_brands") and returned to the frontend.
+
+4. Explain each cell after data loading in colab of colab_electronics.ipynb
+In `colab_electronics.ipynb`, the pipeline is tailored for products without review text (relying solely on star ratings). After the initialization and initial loading/merging of star ratings (Step 1) and metadata (Step 2), the following occurs:
+- Step 3: Merge Metadata + Ratings & Sample (Cell 7): It Inner joins the metadata DataFrame with the average ratings DataFrame strictly by the product ID (`asin`), cleans up duplicates, sorts the entire dataset by `rating_count` descending (to prioritize more reliable generic ratings), and isolates the top `SAMPLE_SIZE` products for the final export.
+- Step 4: Feature Score & Hybrid Rank (Cell 9): Uses Scikit-learn's TfidfVectorizer to create a "specification richness" `feature_score` between 1.0 and 5.0 derived from the product's brand, category, title, and bullet features. Since NLP isn't possible (no review text), an NLP `calculated_sentiment_score` is hardcoded to 0.0, and the `initial_rank` is synthesized via a simple formula: `(0.7 * avg_star_rating) + (0.3 * feature_score)`.
+- Step 5: Extract Image URLs (Cell 10): Extracts product image thumbnails/high-res URLs natively from the dictionary formats presented within the McAuley dataset and parses strings to raw float `price` values safely.
+- Step 6: Export (Cell 11): Prepares an `export_df` containing the cleaned metrics mapped precisely for the backend `__init__` schema, renames columns (e.g. `asin` -> `id`), sorts by `initial_rank` descending, and exports everything visually and as a `.json` blob.
+
+5. Explain each cell from model verification to before export json file of colab_jsonl_category.ipynb
+This Colab script is focused on NLP and generating heavy metric models on McAuley dataset JSONL blobs. The sequence between verification and export is:
+- Model Verification Test (Cell 5): Conducts a quick sanity check using hardcoded positive, negative, and neutral product review strings processed through the `LiYuan/amazon-review-sentiment-analysis` RoBERTa pipeline. It ensures the model hasn't degraded or broken before consuming time executing.
+- Step 2: Load Metadata (Cell 6): Streams through the raw category metadata (can be `.jsonl` streaming via python dictionary building or reading `.parquet` frames directly), removes duplicate products based on the ASIN, and randomly samples a subset defined by `SAMPLE_SIZE`.
+- Step 3: Load Reviews (Cell 7): Efficiently streams the large user reviews JSONL file. For every review, it checks if the associated product ID (`asin`) is present in our sampled subset. If yes, it ensures valid review text content exists and adds it to a `matched_reviews` array before dropping it into a DataFrame.
+- Step 4: Sentiment Analysis (Cell 8): Samples a maximum of 30 review texts randomly per tracked product. It batches the texts (size 128) iterating them completely against the RoBERTa `sentiment-analysis` model instance over a GPU to produce raw star outputs. It groups these by ASIN calculating their mean into `calculated_sentiment_score`.
+- Step 5: Feature Score & Hybrid Rank (Cell 9): Merges the `items_df` with the `review_agg`. Computes a specification richness `feature_score` by calculating the term frequencies of `[brand] [category] [title]`. Computes the true hybrid `initial_rank` which strongly weights sentiment: `(0.6 * calculated_sentiment_score) + (0.2 * old_average_star_rating) + (0.2 * tfidf_feature_score)`. Finally, pulls out and formats prices and image URLs.
+
+6. How frontend accepting the recommened product list and showing them
+- Within `App.jsx`, immediately following the backend `fetch()` returning successfully, `fetchedProducts` equals the `result.data` array of Product objects.
+- The `sortProducts()` local method runs over the list sorting by local user preference filters (e.g., price high-low, low-high) or defaults to the backend score ordering (relevance).
+- `setProducts(...)` updates the `products` state parameter.
+- The `<RecommendationList products={products} />` React component is rendered passing the new sorted array as a prop.
+- Inside `RecommendationList.jsx`, a fast boolean map check happens over `products`. If it's valid, it invokes `.map()` over the list, which generates individual `<ProductCard product={...} />` sub-components populated with image tags, price text, brand icons, and star badges, structurally plotting them into a flexible CSS Grid.

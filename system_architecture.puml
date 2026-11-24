@@ -1,0 +1,59 @@
+@startuml
+title Intelligent Product Recommendation System - System Architecture
+
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam roundcorner 15
+
+'========================
+' DATA SOURCE
+'========================
+[Product & Review Dataset]
+
+'========================
+' PROCESSING LAYER
+'========================
+package "Data Processing" {
+    [Data Cleaning]
+    [Feature Extraction\n(No NLP)]
+}
+
+package "AI Analysis" {
+    [Sentiment Analysis\n(Uses NLP)]
+}
+
+package "Scoring Engine" {
+    [Hybrid Ranking Logic]
+}
+
+'========================
+' STORAGE
+'========================
+[Ranked Product Database]
+
+'========================
+' QUERY & OUTPUT
+'========================
+[User Query]
+[Search & Retrieval]
+[Recommended Products]
+
+'========================
+' CONNECTIONS
+'========================
+[Product & Review Dataset] --> [Data Cleaning]
+
+[Data Cleaning] --> [Feature Extraction\n(No NLP)]
+[Data Cleaning] --> [Sentiment Analysis\n(Uses NLP)]
+
+[Feature Extraction\n(No NLP)] --> [Hybrid Ranking Logic]
+[Sentiment Analysis\n(Uses NLP)] --> [Hybrid Ranking Logic]
+
+[Hybrid Ranking Logic] --> [Ranked Product Database]
+
+[User Query] --> [Search & Retrieval]
+[Ranked Product Database] --> [Search & Retrieval]
+
+[Search & Retrieval] --> [Recommended Products]
+
+@enduml

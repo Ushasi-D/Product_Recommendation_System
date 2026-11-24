@@ -1,0 +1,13 @@
+Appliances
+Beauty
+Car&Motorbike
+Cell Phones
+Computers&Accessories
+Electronics
+Fashion
+Health&PersonalCare
+Home&Kitchen
+HomeImprovement
+MusicalInstruments
+OfficeProducts
+Toys&Games

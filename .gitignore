@@ -1,0 +1,45 @@
+# Python & Virtual Environments
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.pytest_cache/
+
+# Node.js & Frontend builds
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+dist-ssr/
+frontend/dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Large ML models, embeddings & datasets (>100MB GitHub limit)
+*.pkl
+*.pickle
+*.h5
+backend/*.pkl
+
+# Large Raw Datasets & Archives
+*.zip
+*.tar.gz
+raw_meta_All_Beauty/
+raw_meta_Cell_Phones_and_Accessories/
+raw_meta_Electronics/
+
+# OS and Editor configurations
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db

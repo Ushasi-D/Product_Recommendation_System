@@ -1,0 +1,50 @@
+@startuml
+!theme plain
+skinparam componentStyle rectangle
+
+' Define The Storage (Data)
+package "The Storage (Data)" {
+    database "Raw Amazon Reviews" as RawData #E0F2F1
+    database "Cleaned Product List" as ProcessedDB #E0F2F1
+}
+
+' Define The Intelligence (Brain)
+package "The Intelligence (Brain)" {
+    component "Text Analyzer" as NLPController #FFF3E0
+    component "AI Emotion Detector\n(Sentiments)" as TransformerModel #FFF3E0
+    component "Details Extractor\n(Features)" as SpecParser #FFF3E0
+}
+
+' Define The Controller (Server)
+package "The Controller (System)" {
+    component "Main Control System" as FlaskAPI #F3E5F5
+    component "Recommendation Engine" as HybridRanker #F3E5F5
+}
+
+' Define User View
+package "User View (Screen)" {
+    component "Search Box" as SearchUI #E3F2FD
+    component "Product Results" as RecsView #E3F2FD
+    component "Website / App" as ReactApp #E3F2FD
+    actor "Online Shopper" as User #E3F2FD
+}
+
+' Connections - Simple English
+User --> ReactApp : Uses
+ReactApp --> SearchUI : Shows
+ReactApp --> RecsView : Shows
+
+SearchUI --> FlaskAPI : "1. Asks for products"
+FlaskAPI --> HybridRanker : "2. Starts the search"
+
+HybridRanker --> ProcessedDB : "3. Finds matching items"
+HybridRanker --> NLPController : "4. Checks reviews"
+
+NLPController --> TransformerModel : "5. Is this review happy?"
+NLPController --> SpecParser : "6. What are the specs?"
+
+' Background Process
+RawData ..> ProcessedDB : "Filters old data"
+ProcessedDB ..> NLPController : "Learns from reviews"
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+title System Flow (Block Diagram)
+
+' ---- Straight line arrows ----
+skinparam linetype spline
+skinparam defaultFontSize 13
+skinparam ArrowFontSize 13
+skinparam shadowing false
+
+rectangle "User" as User
+rectangle "Web Interface" as UI
+rectangle "Backend System" as BE
+rectangle "Data Layer\n(Products)" as DB
+rectangle "Core Intelligence\n(AI Model)" as AI
+
+User --> UI : Search
+UI --> BE : Request
+
+BE --> DB : Fetch Data
+DB --> BE : Return List
+
+BE --> AI : Analyze
+AI --> BE : Rank / Score
+
+BE --> UI : Response
+UI --> User : Display
+@enduml

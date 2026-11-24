@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Explanation: Amazon Product Recommendation System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #16a085;
+            margin-top: 25px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: #2980b9;
+        }
+
+        .summary-box {
+            background-color: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            padding: 20px;
+            margin-top: 30px;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Project Explanation: Amazon Product Recommendation System</h1>
+
+        <h2>Overview (The "Elevator Pitch")</h2>
+        <p>This project is a smart shopping assistant. Unlike standard websites that just look at star ratings (which
+            can be fake or misleading), our system reads the actual reviews using <strong>Artificial
+                Intelligence</strong>. It understands <em>context</em>—so if someone says "Great... it broke in a day",
+            our AI knows that's actually negative, even if the user gave it 5 stars.</p>
+
+        <h2>How It Works (The 4 Main Parts)</h2>
+
+        <h3>1. The User View (Front-End)</h3>
+        <ul>
+            <li><strong>What it is:</strong> The website the user sees.</li>
+            <li><strong>What it does:</strong> It looks like a normal slick shopping site. The user types "Gaming
+                Laptop" into the search box.</li>
+            <li><strong>The Difference:</strong> It feels fast and modern (built with React.js), designed to look
+                professional.</li>
+        </ul>
+
+        <h3>2. The Controller (Back-End System)</h3>
+        <ul>
+            <li><strong>What it is:</strong> The traffic cop of the system.</li>
+            <li><strong>What it does:</strong> When the user searches, this system takes the request and coordinates
+                everything. It collects potential products and asks the "Brain" (AI) to rank them.</li>
+            <li><strong>The Logic:</strong> It calculates a <strong>"Hybrid Score"</strong>:
+                <ul>
+                    <li>30% of the score comes from the Star Rating.</li>
+                    <li>70% of the score comes from our AI's opinion of the reviews.</li>
+                    <li><em>Why?</em> Because text reviews tell the real truth more than stars do.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>3. The Intelligence / "The Brain" (AI Layer)</h3>
+        <ul>
+            <li><strong>What it is:</strong> The core innovation. It uses a model called <strong>RoBERTa</strong> (a
+                smarter version of BERT).</li>
+            <li><strong>What it does:</strong> It doesn't just look for "good" or "bad" words. It reads whole sentences
+                to understand emotion.</li>
+            <li><strong>Example:</strong>
+                <ul>
+                    <li><em>Old Way:</em> sees the word "Great" -> thinks it's Positive.</li>
+                    <li><em>Our Way:</em> reads "Great, it broke" -> understands Sarcasm -> marks it Negative.</li>
+                </ul>
+            </li>
+            <li>It also automatically pulls out specs like "16GB RAM" from the titles so users can filter easily.</li>
+        </ul>
+
+        <h3>4. The Data (Storage)</h3>
+        <ul>
+            <li><strong>What it is:</strong> A massive collection of Amazon Reviews (from 2023).</li>
+            <li><strong>What it does:</strong> To keep things fast and relevant, we filter out anything older than 2022.
+                We stream this data so the system doesn't crash trying to load millions of reviews at once.</li>
+        </ul>
+
+        <div class="summary-box">
+            <h2>Summary for the Guide</h2>
+            "Sir/Ma'am, we are building a recommendation engine that fixes the problem of misleading star ratings. We
+            use a Transformer-based AI to 'read' the reviews like a human would, catching sarcasm and nuance, and then
+            we combine that with the star rating to give the user a truly honest product recommendation."
+        </div>
+    </div>
+</body>
+
+</html>

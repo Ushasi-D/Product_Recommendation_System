@@ -1,0 +1,21 @@
+@startuml
+title Use Case Diagram
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Online Shopper" as User
+
+rectangle "Product Recommendation System" {
+    usecase "Search for Products" as Search
+    usecase "View Recommended List\n(Sentiment Analyzed)" as View
+}
+
+' User interactions
+User --> Search : 1. Enters Query
+User --> View : 2. Sees Results
+
+' Logical link
+Search ..> View : <<include>>
+
+@enduml

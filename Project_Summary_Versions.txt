@@ -1,0 +1,112 @@
+================================================================================
+               PRODUCT RECOMMENDATION SYSTEM - FULL PROJECT SUMMARY
+================================================================================
+
+This document provides a comprehensive overview of the Product Recommendation
+System's evolution from its inception to the current production-ready Version 2.
+
+--------------------------------------------------------------------------------
+1. VERSION HISTORY & EVOLUTION
+--------------------------------------------------------------------------------
+
+[ VERSION 1 - Conceptual Mockup ]
+The initial iteration of the project was a structural mockup designed to map out
+the frontend component tree and backend API contracts.
+- Backend: A basic FastAPI app returning static data.
+- Database: A static `mock_data.json` file containing 3 hardcoded products.
+- Frontend: A React app with standard `App.jsx`, `SearchBar.jsx`, and
+  `ProductCard.jsx` components rendering the mock JSON.
+- Core Feature: Establishing the layout for star ratings and sentiment progress bars.
+
+[ VERSION 1.5 - First NLP Pipeline & Semantic Search ]
+This version introduced real machine learning and unstructured text processing.
+- Data Processing: Implemented Google Colab scripts to scrape and process the
+  Kaggle Amazon items/reviews dataset. Used the RoBERTa model to calculate an
+  `aiSentimentScore` for products.
+- Database: Exported to `processed_products.json`.
+- Backend: Replaced exact keyword search with Scikit-learn TF-IDF vectorization
+  and Cosine Similarity.
+- Frontend: Added sorting controls (rank_desc, price_low, etc.) directly into
+  the `SearchBar` component.
+
+[ VERSION 2 (CURRENT) - Master JSONL, Entity Tagging & Localization ]
+Version 2 is a massive architectural shift designed for scale, intelligence,
+and Indian market localization. It abandons simple TF-IDF in favor of a customized
+Entity Extraction and Weighted Scoring system.
+- Database (`final_master_dataset.jsonl`): Replaced fragmented JSON files with
+  a single, aggregated JSON Lines (JSONL) file. This allows for rapid, memory-efficient
+  streaming and parsing of thousands of products across diverse categories.
+- Backend Engine (`query_processor.py`):
+    - Dynamically extracts all unique Brands and Categories at startup.
+    - Tokenizes user queries and maps them against the extracted Entities.
+    - Applies a localized weighted scoring algorithm: Exact Brand (+100),
+      Exact Category (+80), Title keywords (+40), Features (+20).
+- New API Architecture:
+    - `/api/search?q=...` (Processes intelligent searches)
+    - `/api/browse?category=...` (Handles strict category filtering)
+    - `/api/categories` & `/api/brands` (Dynamically feeds the frontend)
+- Frontend Enhancements:
+    - Replaced the hardcoded categories dropdown with dynamic API-fed options.
+    - Localized currency formatting from USD ($) to Indian Rupees (₹).
+    - Introduced `ProductModal.jsx`: An interactive pop-up bypassing CSS
+      transform traps using React Portals, displaying full JSON metadata strings.
+
+--------------------------------------------------------------------------------
+2. ARCHITECTURAL PROGRESSION (V1.5 vs V2.0)
+--------------------------------------------------------------------------------
+
+[ VERSION 1.5 Architecture (TF-IDF Model) ]
+
+   User Query        [ FastAPI Backend ]             [ Static Data ]
+  "samsung" ----->  [ TF-IDF Vectorizer ] -------->  processed_products.json
+                          |                            (Single Category)
+                          v
+                  [ Cosine Similarity ]
+                          |
+                          v
+               [ Sort by aiSentimentScore ]
+                          |
+                          v
+                 [ React App frontend ]
+                 (Hardcoded Dropdowns)
+
+
+[ VERSION 2 Architecture (Dynamic Entity Model) ]
+
+                                      [ Boot/Startup Phase ]
+                              Extract Unique Brands & Categories
+                                            |
+                                            v
+                                  In-Memory Pandas DataFrame
+                                            ^
+                                            |
+                               [ final_master_dataset.jsonl ]
+                                (Massive Multi-Category DB)
+                                            |
+   User Query        [ FastAPI Backend ]    |          
+  "samsung tv" ---> [ query_processor.py ] -+
+                          |                   
+                  1. Tokenize & Clean         
+                  2. Extract Entities         
+                     -> Brand: "Samsung"      
+                     -> Category: "TV"        
+                  3. Weighted Scoring         
+                     (+100 for Brand)         
+                     (+80 for Category)       
+                          |                   
+                          v                   
+                 [ React App frontend ]       
+                      /            \
+ [ Dynamic Categories ]            [ INR (₹) Pricing & Modals ]
+
+
+--------------------------------------------------------------------------------
+3. FUTURE SCOPE (VERSION 3.0+)
+--------------------------------------------------------------------------------
+- Migration from an in-memory Pandas DataFrame to a distributed vector database
+  (like Pinecone or Elasticsearch) for handling catalogs exceeding 1M+ items.
+- Implementing user-based collaborative filtering (tracking click-through rates
+  on exactly which products the user expanded in the ProductModal).
+- Integrating Large Language Models (LLMs) to generate dynamic summaries summarizing
+  *why* a specific product was recommended directly in the modal.
+================================================================================

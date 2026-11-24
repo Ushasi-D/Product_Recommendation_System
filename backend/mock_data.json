@@ -1,0 +1,462 @@
+[
+    {
+        "id": "1",
+        "title": "Apple iPhone 15 Pro",
+        "category": "Smartphones",
+        "price": 999.00,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.9,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=iPhone+15+Pro",
+        "features": [
+            {
+                "name": "A17 Pro",
+                "sentiment": 1
+            },
+            {
+                "name": "Battery Life",
+                "sentiment": -1
+            },
+            {
+                "name": "Titanium",
+                "sentiment": 1
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "title": "Samsung Galaxy S24 Ultra",
+        "category": "Smartphones",
+        "price": 1299.00,
+        "originalRating": 4.7,
+        "aiSentimentScore": 4.6,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Galaxy+S24+Ultra",
+        "features": [
+            {
+                "name": "AI Features",
+                "sentiment": 1
+            },
+            {
+                "name": "Zoom Camera",
+                "sentiment": 1
+            },
+            {
+                "name": "Heavy",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "title": "Sony WH-1000XM5",
+        "category": "Audio",
+        "price": 398.00,
+        "originalRating": 4.6,
+        "aiSentimentScore": 4.8,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Sony+WH-1000XM5",
+        "features": [
+            {
+                "name": "Noise Canceling",
+                "sentiment": 1
+            },
+            {
+                "name": "Comfort",
+                "sentiment": 1
+            },
+            {
+                "name": "Flimsy Case",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "title": "Dell XPS 15",
+        "category": "Laptops",
+        "price": 1499.00,
+        "originalRating": 4.5,
+        "aiSentimentScore": 4.3,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Dell+XPS+15",
+        "features": [
+            {
+                "name": "OLED Screen",
+                "sentiment": 1
+            },
+            {
+                "name": "Webcam",
+                "sentiment": -1
+            },
+            {
+                "name": "Build Quality",
+                "sentiment": 1
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "title": "MacBook Air M3",
+        "category": "Laptops",
+        "price": 1099.00,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.9,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=MacBook+Air+M3",
+        "features": [
+            {
+                "name": "M3 Chip",
+                "sentiment": 1
+            },
+            {
+                "name": "Portability",
+                "sentiment": 1
+            },
+            {
+                "name": "Pricey Upgrades",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "title": "iPad Pro 12.9",
+        "category": "Tablets",
+        "price": 1099.00,
+        "originalRating": 4.9,
+        "aiSentimentScore": 4.8,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=iPad+Pro",
+        "features": [
+            {
+                "name": "XDR Display",
+                "sentiment": 1
+            },
+            {
+                "name": "M2 Performance",
+                "sentiment": 1
+            },
+            {
+                "name": "Too Big",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "7",
+        "title": "Logitech MX Master 3S",
+        "category": "Accessories",
+        "price": 99.99,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.7,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=MX+Master+3S",
+        "features": [
+            {
+                "name": "Ergonomics",
+                "sentiment": 1
+            },
+            {
+                "name": "Quiet Clicks",
+                "sentiment": 1
+            },
+            {
+                "name": "Software Bugs",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "title": "Samsung 49-inch Odyssey G9",
+        "category": "Monitors",
+        "price": 1299.99,
+        "originalRating": 4.6,
+        "aiSentimentScore": 4.5,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Odyssey+G9",
+        "features": [
+            {
+                "name": "Ultrawide",
+                "sentiment": 1
+            },
+            {
+                "name": "240Hz",
+                "sentiment": 1
+            },
+            {
+                "name": "Setup Space",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "9",
+        "title": "Keychron Q1 Pro",
+        "category": "Accessories",
+        "price": 199.00,
+        "originalRating": 4.7,
+        "aiSentimentScore": 4.9,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Keychron+Q1",
+        "features": [
+            {
+                "name": "Typing Feel",
+                "sentiment": 1
+            },
+            {
+                "name": "Wireless Connect",
+                "sentiment": 1
+            },
+            {
+                "name": "Heavy",
+                "sentiment": 0
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "title": "Apple Watch Series 9",
+        "category": "Wearables",
+        "price": 399.00,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.7,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Apple+Watch",
+        "features": [
+            {
+                "name": "Double Tap",
+                "sentiment": 1
+            },
+            {
+                "name": "Health Tracking",
+                "sentiment": 1
+            },
+            {
+                "name": "Battery",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "11",
+        "title": "Bose QuietComfort Earbuds II",
+        "category": "Audio",
+        "price": 279.00,
+        "originalRating": 4.5,
+        "aiSentimentScore": 4.4,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Bose+QC+Earbuds",
+        "features": [
+            {
+                "name": "ANC",
+                "sentiment": 1
+            },
+            {
+                "name": "Bulky Case",
+                "sentiment": -1
+            },
+            {
+                "name": "Sound Quality",
+                "sentiment": 1
+            }
+        ]
+    },
+    {
+        "id": "12",
+        "title": "LG C3 OLED 65-inch TV",
+        "category": "Televisions",
+        "price": 1599.00,
+        "originalRating": 4.9,
+        "aiSentimentScore": 4.9,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=LG+C3+OLED",
+        "features": [
+            {
+                "name": "Picture Quality",
+                "sentiment": 1
+            },
+            {
+                "name": "Gaming",
+                "sentiment": 1
+            },
+            {
+                "name": "Brightness",
+                "sentiment": 1
+            }
+        ]
+    },
+    {
+        "id": "13",
+        "title": "Nintendo Switch OLED",
+        "category": "Gaming",
+        "price": 349.99,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.8,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Switch+OLED",
+        "features": [
+            {
+                "name": "Screen Colors",
+                "sentiment": 1
+            },
+            {
+                "name": "Kickstand",
+                "sentiment": 1
+            },
+            {
+                "name": "Joy-Con Drift",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "14",
+        "title": "PlayStation 5 Console",
+        "category": "Gaming",
+        "price": 499.99,
+        "originalRating": 4.9,
+        "aiSentimentScore": 4.7,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=PlayStation+5",
+        "features": [
+            {
+                "name": "Load Times",
+                "sentiment": 1
+            },
+            {
+                "name": "Controller",
+                "sentiment": 1
+            },
+            {
+                "name": "Size",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "15",
+        "title": "Xbox Series X",
+        "category": "Gaming",
+        "price": 499.99,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.6,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Xbox+Series+X",
+        "features": [
+            {
+                "name": "Game Pass",
+                "sentiment": 1
+            },
+            {
+                "name": "Quick Resume",
+                "sentiment": 1
+            },
+            {
+                "name": "Storage Space",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "16",
+        "title": "GoPro HERO12 Black",
+        "category": "Cameras",
+        "price": 399.99,
+        "originalRating": 4.6,
+        "aiSentimentScore": 4.5,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=GoPro+HERO12",
+        "features": [
+            {
+                "name": "Stabilization",
+                "sentiment": 1
+            },
+            {
+                "name": "Battery Life",
+                "sentiment": 1
+            },
+            {
+                "name": "Overheats",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "17",
+        "title": "Sony A7 IV Mirrorless Camera",
+        "category": "Cameras",
+        "price": 2498.00,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.8,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Sony+A7+IV",
+        "features": [
+            {
+                "name": "Autofocus",
+                "sentiment": 1
+            },
+            {
+                "name": "Video Quality",
+                "sentiment": 1
+            },
+            {
+                "name": "Rolling Shutter",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "18",
+        "title": "DJI Mini 4 Pro Drone",
+        "category": "Drones",
+        "price": 759.00,
+        "originalRating": 4.7,
+        "aiSentimentScore": 4.6,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=DJI+Mini+4+Pro",
+        "features": [
+            {
+                "name": "Obstacle Avoidance",
+                "sentiment": 1
+            },
+            {
+                "name": "Compact",
+                "sentiment": 1
+            },
+            {
+                "name": "Requires App",
+                "sentiment": -1
+            }
+        ]
+    },
+    {
+        "id": "19",
+        "title": "Amazon Echo Studio",
+        "category": "Smart Home",
+        "price": 199.99,
+        "originalRating": 4.4,
+        "aiSentimentScore": 4.2,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Echo+Studio",
+        "features": [
+            {
+                "name": "Sound Quality",
+                "sentiment": 1
+            },
+            {
+                "name": "Alexa Integration",
+                "sentiment": 1
+            },
+            {
+                "name": "Heavy Bass",
+                "sentiment": 0
+            }
+        ]
+    },
+    {
+        "id": "20",
+        "title": "Anker 737 Power Bank",
+        "category": "Accessories",
+        "price": 149.99,
+        "originalRating": 4.8,
+        "aiSentimentScore": 4.9,
+        "image": "https://placehold.co/600x400/eeeeee/333333.png?text=Anker+Power+Bank",
+        "features": [
+            {
+                "name": "Fast Charging",
+                "sentiment": 1
+            },
+            {
+                "name": "Screen Display",
+                "sentiment": 1
+            },
+            {
+                "name": "Bulky",
+                "sentiment": -1
+            }
+        ]
+    }
+]

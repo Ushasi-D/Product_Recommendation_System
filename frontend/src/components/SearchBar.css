@@ -1,0 +1,115 @@
+.search-controls-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar-container {
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.search-bar-container:focus-within {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+}
+
+.category-dropdown {
+    padding: 0.8rem 1rem;
+    border: none;
+    border-right: 1px solid #e5e7eb;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    outline: none;
+    min-width: 160px;
+    transition: background 0.2s ease;
+}
+
+.category-dropdown:hover {
+    background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #1f2937;
+    min-width: 0;
+}
+
+.search-input::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.sort-dropdown {
+    padding: 0.8rem 1rem;
+    border: none;
+    border-left: 1px solid #e5e7eb;
+    background: #f8fafc;
+    font-size: 0.85rem;
+    color: #334155;
+    cursor: pointer;
+    outline: none;
+    min-width: 170px;
+}
+
+.sort-dropdown:hover {
+    background: #e2e8f0;
+}
+
+.search-button {
+    padding: 0 2rem;
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.search-button:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #2563eb 100%);
+}
+
+.search-button:active {
+    transform: scale(0.98);
+}
+
+/* Responsive: stack controls on mobile */
+@media (max-width: 768px) {
+    .search-bar-container {
+        border-radius: 16px;
+        flex-wrap: wrap;
+    }
+    .category-dropdown,
+    .sort-dropdown {
+        min-width: 0;
+        flex: 1;
+        border-right: none;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .search-input {
+        width: 100%;
+    }
+    .search-button {
+        width: 100%;
+        padding: 1rem;
+        border-radius: 0 0 16px 16px;
+    }
+}

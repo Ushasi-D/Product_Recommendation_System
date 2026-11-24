@@ -1,0 +1,34 @@
+@startuml
+title Class Diagram
+skinparam classAttributeIconSize 0
+
+class FlaskServer {
+  +search_products(query: String): JSON
+}
+
+class HybridRanker {
+  +rank_products(query: String): List<Product>
+  -calculate_score(sentiment: Float, stars: Float): Float
+}
+
+class SentimentModel {
+  +get_sentiment(review_text: String): Float
+}
+
+class SpecExtractor {
+  +extract_specs(product_title: String): Map
+}
+
+class Product {
+  +id: String
+  +title: String
+  +sentiment_score: Float
+  +specs: Map
+}
+
+' Relationships
+FlaskServer ..> HybridRanker : uses
+HybridRanker ..> SentimentModel : uses
+HybridRanker ..> SpecExtractor : uses
+HybridRanker "1" -- "*" Product : manages
+@enduml

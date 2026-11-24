@@ -1,0 +1,177 @@
+
+ ╔══════════════════════════════════════════════════════════════════════════════════╗
+ ║                                                                                ║
+ ║       █████╗ ██╗    ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ███╗███╗   ███╗    ║
+ ║      ██╔══██╗██║    ██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗ ████║████╗ ████║    ║
+ ║      ███████║██║    ██████╔╝█████╗  ██║     ██║   ██║██╔████╔██║██╔████╔██║    ║
+ ║      ██╔══██║██║    ██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╔╝██║██║╚██╔╝██║   ║
+ ║      ██║  ██║██║    ██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚═╝ ██║██║ ╚═╝ ██║   ║
+ ║      ╚═╝  ╚═╝╚═╝    ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝   ║
+ ║                                                                                ║
+ ║              INTELLIGENT PRODUCT RECOMMENDATION SYSTEM                         ║
+ ║                    Step-by-Step Project Progress                                ║
+ ║                                                                                ║
+ ╚══════════════════════════════════════════════════════════════════════════════════╝
+
+
+ ┌──────────────────────────────────────────────────────────────────────────────────┐
+ │  📅 Project Timeline: February 2026 - March 2026                               │
+ │  🛠️  Tech Stack: React + FastAPI + Hugging Face Transformers + scikit-learn     │
+ │  🎯 Goal: AI-powered product recommendations using NLP sentiment analysis      │
+ └──────────────────────────────────────────────────────────────────────────────────┘
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██████╗ ██╗  ██╗ █████╗ ███████╗███████╗     ██╗
+  ██╔══██╗██║  ██║██╔══██╗██╔════╝██╔════╝    ███║
+  ██████╔╝███████║███████║███████╗█████╗      ╚██║
+  ██╔═══╝ ██╔══██║██╔══██║╚════██║██╔══╝       ██║
+  ██║     ██║  ██║██║  ██║███████║███████╗      ██║
+  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝      ╚═╝
+  MOCK SETUP & FOUNDATION
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  Step 1 ─── Project Structure Setup
+  ├── Created the base project directory: Product_Recommendation_System/
+  ├── Set up two main folders:
+  │     ├── backend/    (FastAPI Python server)
+  │     └── frontend/   (React application)
+  ├── Initialized virtual environment (venv) for Python dependencies
+  └── Cleaned up old virtual environment (venv_old)
+
+  Step 2 ─── Backend API Foundation
+  ├── Installed FastAPI and Uvicorn for the backend server
+  ├── Created main.py with:
+  │     ├── FastAPI app instance
+  │     ├── CORS middleware (allows frontend to talk to backend)
+  │     └── Basic /api/recommendations endpoint
+  ├── Created mock_data.json with 3 sample gaming laptops
+  │     └── Each product had: title, image, price, rating, and feature sentiments
+  └── Tested server via: uvicorn main:app --reload
+
+  Step 3 ─── React Frontend Foundation
+  ├── Created App.jsx with the main application layout
+  │     ├── Header with AI branding (🤖 AIRecommend)
+  │     ├── Hero section with search bar
+  │     └── Results section with product cards
+  ├── Created SearchBar.jsx for user input
+  ├── Created ProductCard.jsx to display individual products
+  │     └── Shows: image, title, price, AI sentiment score, star rating
+  ├── Created RecommendationList.jsx to render the grid of cards
+  └── Styled everything with CSS (App.css, SearchBar.css, ProductCard.css)
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██████╗ ██╗  ██╗ █████╗ ███████╗███████╗    ██████╗
+  ██╔══██╗██║  ██║██╔══██╗██╔════╝██╔════╝    ╚════██╗
+  ██████╔╝███████║███████║███████╗█████╗       █████╔╝
+  ██╔═══╝ ██╔══██║██╔══██║╚════██║██╔══╝      ╚═══██╗
+  ██║     ██║  ██║██║  ██║███████║███████╗    ██████╔╝
+  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝    ╚═════╝
+  REAL DATA PIPELINE & NLP
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  Step 4 ─── Google Colab NLP Pipeline (colab_pipeline.py / .ipynb)
+  ├── Created a Python script to run on Google Colab with GPU support
+  ├── Data Loading:
+  │     ├── Loads 20191226-items.csv (product metadata: asin, brand, title, price, etc.)
+  │     ├── Loads 20191226-reviews.csv (user reviews: asin, rating, body, etc.)
+  │     └── Merges both CSVs on the 'asin' column after stripping whitespace
+  ├── Sentiment Analysis:
+  │     ├── Initially used BERT model for sentiment detection
+  │     ├── ⚡ UPGRADED to RoBERTa model (LiYuan/amazon-review-sentiment-analysis)
+  │     │     └── Reason: Better accuracy (95.14%) and improved sarcasm detection
+  │     ├── Processes reviews in batches of 128 on GPU for speed
+  │     └── Maps sentiment labels (1-5 stars) to numerical scores
+  ├── Hybrid Score Calculation:
+  │     ├── Feature Score: TF-IDF vectorizer on product text (brand + title)
+  │     ├── Initial Rank formula:
+  │     │     └── (0.6 × sentiment) + (0.2 × star_rating) + (0.2 × feature_score)
+  │     └── Products ranked by initial_rank (higher = better recommendation)
+  └── Output: processed_products.json
+        └── Each product: id, title, brand, image, price, rating, review_count,
+            calculated_sentiment_score, feature_score, initial_rank
+
+  Step 5 ─── Backend Upgrade: TF-IDF Semantic Search
+  ├── Replaced basic keyword matching with scikit-learn TF-IDF search
+  │     ├── Builds an in-memory TF-IDF index on server startup
+  │     ├── Uses cosine similarity to rank search results by relevance
+  │     └── Fallback: includes exact keyword matches if TF-IDF score is low
+  ├── Added In-Memory Caching:
+  │     └── Loads processed_products.json ONCE on startup (fast access)
+  ├── Added Sorting API Parameters:
+  │     ├── rank_desc  → Highly Recommended First (default)
+  │     ├── rank_asc   → Lowest Recommended First
+  │     ├── price_low  → Price: Low to High
+  │     └── price_high → Price: High to Low
+  └── Installed scikit-learn as a new dependency
+
+  Step 6 ─── Frontend: Product Cards & Search Integration
+  ├── Updated ProductCard.jsx:
+  │     ├── Mapped new JSON fields (rating, calculated_sentiment_score, initial_rank)
+  │     ├── Added safe fallbacks for missing data (prevents crash on undefined)
+  │     ├── Added image onError handler (shows placeholder if Amazon URL is broken)
+  │     └── Dynamically shows "Features" section only when features exist
+  ├── Updated App.jsx:
+  │     ├── Fetches data from /api/recommendations?q=<query>&sort=<method>
+  │     ├── Added currentQuery and sortMethod state variables
+  │     └── Passes sort parameter to backend on every request
+  └── Updated SearchBar.jsx:
+        ├── Added a <select> dropdown for sorting options
+        ├── Options: Highly Recommended, Lowest Recommended, Price Low/High
+        └── Triggers re-fetch when user changes sort selection
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+  ██████╗ ██╗  ██╗ █████╗ ███████╗███████╗    ██████╗
+  ██╔══██╗██║  ██║██╔══██╗██╔════╝██╔════╝    ╚════██╗
+  ██████╔╝███████║███████║███████╗█████╗       █████╔╝
+  ██╔═══╝ ██╔══██║██╔══██║╚════██║██╔══╝       ╚═══╝
+  ██║     ██║  ██║██║  ██║███████║███████╗       ██║
+  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝       ╚═╝
+  MULTI-CATEGORY INTEGRATION (In Progress)
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  Step 7 ─── Dataset Research & Acquisition Strategy
+  ├── Explored McAuley Lab Amazon Reviews 2023 dataset on Hugging Face
+  │     ├── Attempted HuggingFace datasets library → trust_remote_code BLOCKED
+  │     ├── Attempted direct UCSD HTTP streaming → 404 Not Found (server down)
+  │     └── Conclusion: UCSD servers unreliable, HuggingFace API deprecated
+  ├── Discovered Parquet file downloads from Hugging Face Files tab
+  │     └── Manual download works! Multiple .parquet files per category
+  └── Created colab_pipeline_v5.ipynb:
+        ├── Reads locally uploaded .parquet files using glob + pd.concat
+        ├── Auto-merges 10+ parquet files per category into one DataFrame
+        ├── Runs the same RoBERTa NLP pipeline on the merged data
+        └── Exports category-specific JSON (e.g., electronics_processed.json)
+
+  Step 8 ─── (UPCOMING) Backend Multi-Category Support
+  ├── [ ] Update main.py to load multiple category JSON files
+  ├── [ ] Add category filter parameter to /api/recommendations endpoint
+  └── [ ] Frontend category dropdown in SearchBar.jsx
+
+  Step 9 ─── (UPCOMING) Frontend Category Filters
+  ├── [ ] Add category tabs/buttons (Electronics, Fashion, Appliances)
+  ├── [ ] Pass selected category as query parameter to backend
+  └── [ ] Display category badges on ProductCard.jsx
+
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+
+  ┌──────────────────────────────────────────────────────────────────────────────┐
+  │                                                                            │
+  │   📁 BACKUP FILES (V1 - Small Kaggle Dataset Version)                     │
+  │   ─────────────────────────────────────────────────────────────────────     │
+  │    • backend/old_main.py          ← Backup of main.py                     │
+  │    • frontend/src/old_App.jsx     ← Backup of App.jsx                     │
+  │    • frontend/src/components/old_SearchBar.jsx  ← Backup of SearchBar.jsx │
+  │                                                                            │
+  │   These files contain the WORKING V1 code that uses                       │
+  │   processed_products.json from the small Kaggle dataset.                  │
+  │   Restore these if the new multi-category version breaks anything.        │
+  │                                                                            │
+  └──────────────────────────────────────────────────────────────────────────────┘
+
+ ═══════════════════════════════════════════════════════════════════════════════════
+                        Last Updated: March 10, 2026
+ ═══════════════════════════════════════════════════════════════════════════════════

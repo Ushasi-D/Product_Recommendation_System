@@ -1,0 +1,62 @@
+# Product Recommendation System Documentation
+
+1. Abstract
+The Product Recommendation System is an intelligent, search-driven e-commerce discovery platform designed to surface highly relevant products based on natural language user queries. Moving beyond traditional exact-match keyword searching, this system employs dynamic entity extraction and weighted relevance scoring. By automatically identifying implied Brands and Categories from user input, the engine resolves ambiguities (e.g., distinguishing a "Samsung smartphone" from a "Samsung compatible phone case"). The system is backed by a consolidated master dataset integrating thousands of products across multiple domains, processed entirely in-memory using Pandas for rapid retrieval and ranking.
+
+2. Problem Statement
+Traditional e-commerce search algorithms often rely on superficial text matching (TF-IDF or exact substring searches). This leads to poor user experiences when queries contain a mix of generalized categories (e.g., "Smartphone") and specific brands (e.g., "Samsung"). In naive systems, searching for a brand often returns hundreds of cheap, third-party accessories that happen to mention the brand name in their title before surfacing the actual flagship products. Furthermore, maintaining and querying highly fragmented category-specific databases introduces unnecessary architectural complexity and latency.
+
+3. Objective
+The primary objective is to build a robust, scalable backend search engine that mimics modern e-commerce "Query Understanding". Specifically, the goals are to:
+- Combine fragmented product data into a single, unified source of truth.
+- Process natural language search queries to intelligently identify Brand intent and Category intent.
+- Assign weighted relevance scores to products to ensure primary items (like phones) outrank secondary items (like covers/cases) unless explicitly requested.
+- Provide a responsive, seamless API capable of handling both direct searches and category browsing.
+
+4. Methodology
+The system employs a "Rules-Based Entity Tagging and Weighted Scoring" methodology rather than complex machine learning inference at query time. 
+- During initialization, the system actively scans the dataset to compile comprehensive, dynamic dictionaries of all known Brands and Categories.
+- At query time, the input string is normalized, tokenized, and stripped of stopwords. 
+- The remaining tokens are intersected with the dynamic dictionaries to tag "Intended Brands" and "Intended Categories".
+- A Pandas-vectorized scoring algorithm assigns points: massive weight (+100) to exact Brand column matches, heavy weight (+80) for Category column matches, and lower weights (+40) for standard title keyword matches.
+- Products are sorted by this computed final relevance score and returned to the client.
+
+5. Proposed System 
+The proposed system consists of a React.js frontend providing an intuitive search and browse interface, communicating via REST API with a FastAPI (Python) backend. The backend strictly uses Pandas for data manipulation, loading the entire product catalog into memory at startup. The system eliminates hardcoded dropdowns by exposing dynamic `/api/categories` and `/api/brands` endpoints. The core intelligence resides in `/api/search`, which utilizes the `query_processor` module to parse, tag, and score products against user intent.
+
+6. Architecture Block Diagram
+[Frontend Application (React.js)]
+       |  |
+       |  | (REST API via HTTP/JSON)
+       v  v
+[FastAPI Backend Server (Python)]
+       |
+       |----> [Query Processor Module]
+       |         - Normalization & Tokenization
+       |         - Entity Extraction (Brands/Categories)
+       |         - Relevance Scoring Engine
+       |
+       v
+[Pandas In-Memory DataFrame]
+       ^
+       | (Loaded on Startup)
+       |
+[final_master_dataset.jsonl (Storage Layer)]
+
+7. Dataset Preparation
+The unified dataset (`final_master_dataset.jsonl`) was created through a multi-step aggregation process:
+- Initial raw data was downloaded (e.g., Amazon review datasets) and processed using Google Colab notebooks to extract sentiments, clean text, and format JSON structures.
+- This created several category-specific files (e.g., `electronics_processed.json`, `beauty_processed.json`).
+- A Python aggregation script (`Merge_json.py`) was written to iterate over these individual JSON arrays.
+- For each product dictionary, it ensured basic data conformity and wrote the object as a single, stringified JSON line into the `.jsonl` (JSON Lines) format. 
+- This `.jsonl` structure allows for highly efficient, line-by-line streaming without loading massive, single-array JSON structures into memory all at once during startup parsing.
+
+8. Conclusion
+How it will be useful: It heavily reduces "search friction" for users, allowing them to type naturally and find correct products faster without navigating complex filter menus.
+Target User: Everyday e-commerce shoppers who expect Google/Amazon-level search understanding, and businesses needing a lightweight, intelligent product discovery engine.
+Managing Storage on Data Increase: Currently, data is held in-memory via Pandas. As data scales past available RAM (e.g., millions of rows), the architecture must migrate from a static `.jsonl` file to an external Search Database like Elasticsearch or a vector database like Milvus/Pinecone, while retaining the same API contracts.
+Including New Data: Including new data simply requires appending new JSON objects (as text strings) to the bottom of the `final_master_dataset.jsonl` file and restarting the FastAPI worker, which will automatically discover and index the new concepts.
+Future Scope: 
+- Integrating semantic search (Vector Embeddings via HuggingFace) to catch synonymous matches that fail exact-keyword comparisons.
+- Utilizing the user's IP or history for personalized initial_rank boosting.
+- Replacing the static JSON extraction with a live PostgreSQL + Elasticsearch architecture for real-time CRUD operations without server restarts.

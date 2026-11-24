@@ -1,0 +1,53 @@
+# Product Recommendation System: Understanding & Functionality Summary
+
+This document summarizes the core functionalities, requested changes, and how the Product Recommendation System should ultimately behave based on our discussions.
+
+## 1. Data Architecture
+*   **Single Source of Truth:** The system has transitioned from loading multiple separate category JSON files to a single, unified master dataset (`final_master_dataset.jsonl`).
+*   **Dynamic Data extraction:** The backend automatically reads this file on startup to dynamically learn all the unique "Brands" and "Categories" available in the database, ensuring zero hardcoded lists.
+
+## 2. The User Interface (Frontend)
+*   **Search is King:** The primary method for finding products is a single text input (the Search Bar).
+*   **Optional Category Filters:** While we previously required a category dropdown, category selection is now **not mandatory**. The dropdown serves as an optional filter rather than a rigid requirement.
+*   **Browsing:** A user can click a specific category from the dropdown to simply browse all products within that category without typing a search word.
+
+## 3. Intelligent Search Processing (Backend)
+This is the core of the new system upgrade. The search is no longer a simple "does string A exist in string B". It now uses "Query Understanding."
+
+When a user types a query (e.g., "Samsung Smartphone under 15000"):
+
+*   **Step 1: Normalization:** The system cleans the query (lowercasing, stripping punctuation).
+*   **Step 2: Tokenization:** It breaks the query apart into individual words `["samsung", "smartphone", "under", "15000"]`.
+*   **Step 3: Entity Extraction:** It compares the words against our dynamic lists of Brands and Categories.
+    *   It identifies "Samsung" as an *Intended Brand*.
+    *   It identifies "Smartphone" as an *Intended Category* (mapping it internally to the actual dataset category string, like "Cell Phones").
+    *   It leaves "under" and "15000" as *Raw Keywords*.
+
+## 4. Behavior Examples & Expected Outcomes
+
+Based on the new understanding engine, here is how the system handles specific edge cases and queries:
+
+### Case A: The Brand Query
+*   **User types:** "Samsung"
+*   **System Action:** Identifies "Samsung" as a Brand. It searches the entire database and assigns massive priority scores to products whose `brand` column is exactly "Samsung".
+*   **Result:** Real Samsung TVs, phones, and appliances appear first. Third-party accessories that just happen to say "Compatible with Samsung" in their title are pushed to the bottom.
+
+### Case B: The Category Query
+*   **User types:** "Smartphone"
+*   **System Action:** Translates "Smartphone" to the "Cell Phones" category. It boosts the score of products belonging to that category.
+*   **Result:** Actual cell phones appear. Accessories like "Smartphone chargers" or "Smartphone car mounts" (which belong to the Accessories or Car sub-categories) are filtered out or drastically lowered in rank.
+
+### Case C: The Brand + Product Query
+*   **User types:** "Samsung s24" or "Samsung Smartphone"
+*   **System Action:** The system stacks the priorities. It demands a product where `brand="Samsung"` AND (`category="Cell Phones"` OR `title includes "s24"`).
+*   **Result:** A perfect intersection. The user gets exactly the Samsung-branded phones they asked for.
+
+### Case D: The Complex/Noisy Query
+*   **User types:** "some_cell_phone_case_Samsung_s24"
+*   **System Action:** The system tags "Samsung" (Brand) and "cell phone case" (Category mapping to Accessories).
+*   **Result:** The system recognizes the user wants an accessory *for* a Samsung, not the phone itself. It will prioritize items in the Accessories category that mention Samsung and s24, ranking them higher than actual Samsung phones.
+
+## Summary of the "Why"
+The system was previously too rigid. If a user searched "Smart TV" while the "Beauty" category was accidentally selected, or if they searched "Samsung" in "All" and got 500 cheap phone cases before seeing an actual Samsung phone, the experience felt broken.
+
+By using a single master file and applying **Weighted Entity Scoring** (giving massive points for true Brand/Category column matches, and fewer points for title string matches), the system now understands *what* the user is asking for, exactly as a modern e-commerce search engine should.
